@@ -192,7 +192,7 @@ function CinnamonMenu() {
         style={{ backgroundColor: `${theme.menuText}10` }}
       >
         <Search size={9} style={{ color: `${theme.menuText}60` }} />
-        <span className="text-[8px] font-sans" style={{ color: `${theme.menuText}50` }}>
+        <span className="text-[10px] font-sans" style={{ color: `${theme.menuText}50` }}>
           Search...
         </span>
       </div>
@@ -217,7 +217,7 @@ function CinnamonMenu() {
               }}
             >
               <cat.icon size={8} style={{ opacity: 0.8 }} />
-              <span className="text-[6.5px] font-sans truncate">{cat.name}</span>
+              <span className="text-[8px] font-sans truncate">{cat.name}</span>
             </div>
           ))}
         </div>
@@ -247,7 +247,7 @@ function CinnamonMenu() {
                 >
                   <app.icon size={iconSize} style={{ color: theme.accentColor }} />
                 </div>
-                <span className="text-[7px] font-sans">{app.name}</span>
+                <span className="text-[9px] font-sans">{app.name}</span>
               </div>
             ))}
           </div>
@@ -296,21 +296,21 @@ function WindowControls({
     <div className="flex items-center gap-1">
       <button
         className="flex items-center justify-center rounded-sm transition-colors hover:bg-white/20"
-        style={{ width: 12, height: 12, backgroundColor: `${headerText}15` }}
+        style={{ width: 14, height: 14, backgroundColor: `${headerText}15` }}
       >
-        <Minus size={7} style={{ color: headerText }} />
+        <Minus size={9} style={{ color: headerText }} />
       </button>
       <button
         className="flex items-center justify-center rounded-sm transition-colors hover:bg-white/20"
-        style={{ width: 12, height: 12, backgroundColor: `${headerText}15` }}
+        style={{ width: 14, height: 14, backgroundColor: `${headerText}15` }}
       >
-        <Maximize2 size={6} style={{ color: headerText }} />
+        <Maximize2 size={8} style={{ color: headerText }} />
       </button>
       <button
         className="flex items-center justify-center rounded-sm transition-colors hover:bg-red-500/80"
-        style={{ width: 12, height: 12, backgroundColor: `${headerText}15` }}
+        style={{ width: 14, height: 14, backgroundColor: `${headerText}15` }}
       >
-        <X size={7} style={{ color: headerText }} />
+        <X size={9} style={{ color: headerText }} />
       </button>
     </div>
   )
@@ -370,7 +370,7 @@ function NemoWindow() {
           backgroundColor: theme.windowHeaderBg,
           color: theme.windowHeaderText,
           borderRadius: `${radius}px ${radius}px 0 0`,
-          minHeight: 24,
+          minHeight: 28,
         }}
       >
         {controlsLeft && (
@@ -395,21 +395,21 @@ function NemoWindow() {
         <div className="flex items-center gap-0.5">
           <div
             className="flex items-center justify-center rounded"
-            style={{ width: 16, height: 16, backgroundColor: `${theme.windowHeaderText}10` }}
+            style={{ width: 18, height: 18, backgroundColor: `${theme.windowHeaderText}10` }}
           >
-            <ChevronLeft size={9} style={{ color: `${theme.windowHeaderText}60` }} />
+            <ChevronLeft size={11} style={{ color: `${theme.windowHeaderText}60` }} />
           </div>
           <div
             className="flex items-center justify-center rounded"
-            style={{ width: 16, height: 16, backgroundColor: `${theme.windowHeaderText}10` }}
+            style={{ width: 18, height: 18, backgroundColor: `${theme.windowHeaderText}10` }}
           >
-            <ChevronRight size={9} style={{ color: `${theme.windowHeaderText}60` }} />
+            <ChevronRight size={11} style={{ color: `${theme.windowHeaderText}60` }} />
           </div>
           <div
             className="flex items-center justify-center rounded"
-            style={{ width: 16, height: 16, backgroundColor: `${theme.windowHeaderText}10` }}
+            style={{ width: 18, height: 18, backgroundColor: `${theme.windowHeaderText}10` }}
           >
-            <ChevronUp size={9} style={{ color: `${theme.windowHeaderText}60` }} />
+            <ChevronUp size={11} style={{ color: `${theme.windowHeaderText}60` }} />
           </div>
         </div>
         {/* Location bar */}
@@ -417,12 +417,12 @@ function NemoWindow() {
           className="flex-1 flex items-center rounded px-2 py-0.5 mx-1"
           style={{ backgroundColor: `${theme.windowHeaderText}08` }}
         >
-          <Home size={7} style={{ color: `${theme.windowHeaderText}60` }} />
-          <span className="text-[8px] font-sans ml-1" style={{ color: `${theme.windowHeaderText}80` }}>
+          <Home size={9} style={{ color: `${theme.windowHeaderText}60` }} />
+          <span className="text-[10px] font-sans ml-1" style={{ color: `${theme.windowHeaderText}80` }}>
             /home/user
           </span>
         </div>
-        <Search size={9} style={{ color: `${theme.windowHeaderText}60` }} />
+        <Search size={11} style={{ color: `${theme.windowHeaderText}60` }} />
       </div>
 
       {/* Content */}
@@ -434,26 +434,26 @@ function NemoWindow() {
             borderRight: `1px solid ${theme.windowHeaderText}12`,
           }}
         >
-          <span className="text-[7px] font-sans font-medium px-1 mb-0.5" style={{ color: `${theme.windowHeaderText}50` }}>
+          <span className="text-[9px] font-sans font-medium px-1 mb-0.5" style={{ color: `${theme.windowHeaderText}50` }}>
             Places
           </span>
           {sidebarItems.map(({ name, icon: Icon, active }) => (
             <div
               key={name}
-              className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[7px] font-sans"
+              className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-sans"
               style={{
                 color: active ? theme.windowHeaderText : `${theme.windowHeaderText}b0`,
                 backgroundColor: active ? `${theme.accentColor}25` : "transparent",
               }}
             >
-              <Icon size={8} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
+              <Icon size={10} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
               {name}
             </div>
           ))}
         </div>
 
         <div className="flex-1 p-2 overflow-hidden">
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="grid grid-cols-3 gap-2">
             {contentFolders.map(({ name, icon: Icon }) => (
               <div
                 key={name}
@@ -462,14 +462,14 @@ function NemoWindow() {
                 <div
                   className="flex items-center justify-center rounded"
                   style={{
-                    width: 28,
-                    height: 24,
+                    width: 34,
+                    height: 30,
                     backgroundColor: `${theme.accentColor}20`,
                   }}
                 >
-                  <Icon size={13} style={{ color: theme.accentColor }} />
+                  <Icon size={16} style={{ color: theme.accentColor }} />
                 </div>
-                <span className="text-[6px] font-sans text-center" style={{ color: theme.windowHeaderText }}>
+                <span className="text-[8px] font-sans text-center" style={{ color: theme.windowHeaderText }}>
                   {name}
                 </span>
               </div>
@@ -525,7 +525,7 @@ function TextEditorWindow() {
           backgroundColor: theme.windowHeaderBg,
           color: theme.windowHeaderText,
           borderRadius: `${radius}px ${radius}px 0 0`,
-          minHeight: 24,
+          minHeight: 28,
         }}
       >
         {controlsLeft && (
@@ -550,7 +550,7 @@ function TextEditorWindow() {
             {lines.map(({ num }) => (
               <span
                 key={num}
-                className="text-[7px] font-mono leading-[12px]"
+                className="text-[9px] font-mono leading-[14px]"
                 style={{ color: `${theme.windowHeaderText}30` }}
               >
                 {num}
@@ -560,7 +560,7 @@ function TextEditorWindow() {
           {/* Code */}
           <div className="flex-1 py-1 px-2 overflow-hidden">
             {lines.map(({ num, text }) => (
-              <div key={num} className="text-[7px] font-mono leading-[12px]">
+              <div key={num} className="text-[9px] font-mono leading-[14px]">
                 {text.startsWith("#") ? (
                   <span style={{ color: `${theme.windowHeaderText}50` }}>{text}</span>
                 ) : text.includes('"') ? (

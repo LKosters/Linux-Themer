@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { SiteHeader } from "@/components/shared/site-header"
+import { TOOL_CATEGORIES } from "@/lib/tools-config"
 
 const TERMINAL_LINES = [
   { type: "comment", text: "# ~/.config/hypr/hyprland.conf" },
@@ -108,208 +109,132 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Tools — category layout */}
+        {/* Tools — driven by config */}
         <section id="tools" className="mx-auto max-w-6xl px-6 pb-16">
           <div className="grid grid-cols-1 gap-0 lg:grid-cols-[1fr_1px_1fr]">
-            {/* Left: Desktop Environments */}
+            {/* Left column: first "full" layout category */}
             <div className="pr-0 lg:pr-10">
-              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
-                Desktop Environments
-              </p>
-              <div className="mt-1 h-px w-full bg-border" />
-
-              <div className="mt-8 space-y-8">
-                {/* GNOME */}
-                <div>
-                  <Link href="/gnome" className="group">
-                    <h3 className="font-serif text-2xl text-foreground">GNOME</h3>
-                    <p className="mt-1.5 text-sm font-sans text-muted-foreground leading-relaxed max-w-sm">
-                      Customize the modern GNOME desktop — shell panel, dock, window decorations, and GTK widgets. Export as a GTK CSS stylesheet.
-                    </p>
-                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Customize GNOME <ArrowRight size={11} />
-                    </span>
-                  </Link>
+              {TOOL_CATEGORIES.filter((c) => c.homeLayout === "full").slice(0, 1).map((cat) => (
+                <div key={cat.id}>
+                  <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
+                    {cat.docsLabel}
+                  </p>
+                  <div className="mt-1 h-px w-full bg-border" />
+                  <div className="mt-8 space-y-8">
+                    {cat.tools.map((tool) => (
+                      <div key={tool.slug}>
+                        <Link href={`/${tool.slug}`} className="group">
+                          <h3 className="font-serif text-2xl text-foreground">{tool.title}</h3>
+                          <p className="mt-1.5 text-sm font-sans text-muted-foreground leading-relaxed max-w-sm">
+                            {tool.homeDescription}
+                          </p>
+                          <span className="mt-2 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                            {tool.cta} <ArrowRight size={11} />
+                          </span>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-
-                {/* Cinnamon */}
-                <div>
-                  <Link href="/cinnamon" className="group">
-                    <h3 className="font-serif text-2xl text-foreground">Cinnamon</h3>
-                    <p className="mt-1.5 text-sm font-sans text-muted-foreground leading-relaxed max-w-sm">
-                      Traditional panel-based desktop with a familiar taskbar layout. Style the panel, menu, and window borders. Export as Cinnamon CSS.
-                    </p>
-                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Customize Cinnamon <ArrowRight size={11} />
-                    </span>
-                  </Link>
-                </div>
-
-                {/* KDE Plasma */}
-                <div>
-                  <Link href="/kde" className="group">
-                    <h3 className="font-serif text-2xl text-foreground">KDE Plasma</h3>
-                    <p className="mt-1.5 text-sm font-sans text-muted-foreground leading-relaxed max-w-sm">
-                      The feature-rich KDE Plasma desktop. Customize the panel, Breeze window decorations, accent colors, and widgets. Export as a Plasma color scheme.
-                    </p>
-                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Customize KDE Plasma <ArrowRight size={11} />
-                    </span>
-                  </Link>
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* Vertical divider */}
             <div className="hidden lg:block bg-border" />
 
-            {/* Right: Hyprland ecosystem */}
+            {/* Right column: first "compact" layout category */}
             <div className="pl-0 lg:pl-10 mt-10 lg:mt-0">
+              {TOOL_CATEGORIES.filter((c) => c.homeLayout === "compact").slice(0, 1).map((cat) => (
+                <div key={cat.id}>
+                  <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
+                    {cat.label}
+                  </p>
+                  <div className="mt-1 h-px w-full bg-border" />
+                  <div className="mt-8 space-y-6">
+                    {cat.tools.map((tool) => (
+                      <div key={tool.slug}>
+                        <Link href={`/${tool.slug}`} className="group flex items-start gap-3">
+                          {tool.dotColor && (
+                            <span
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                              style={{ backgroundColor: tool.dotColor }}
+                            />
+                          )}
+                          <div>
+                            <h3 className="font-serif text-xl text-foreground">{tool.title}</h3>
+                            <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
+                              {tool.homeDescription}
+                            </p>
+                            <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                              {tool.cta} <ArrowRight size={11} />
+                            </span>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Remaining compact categories (Niri, etc.) */}
+          {TOOL_CATEGORIES.filter((c) => c.homeLayout === "compact").slice(1).map((cat) => (
+            <div key={cat.id} className="mt-12">
               <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
-                Hyprland
+                {cat.label}
               </p>
               <div className="mt-1 h-px w-full bg-border" />
-
               <div className="mt-8 space-y-6">
-                <div>
-                  <Link href="/hyprland" className="group flex items-start gap-3">
-                    <span
-                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: "#89b4fa" }}
-                    />
-                    <div>
-                      <h3 className="font-serif text-xl text-foreground">Theme Designer</h3>
-                      <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
-                        Visual customizer for borders, blur, gaps, shadows, animations, and full Waybar styling with a live tiling desktop preview.
-                      </p>
-                      <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                        Open theme designer <ArrowRight size={11} />
-                      </span>
-                    </div>
-                  </Link>
-                </div>
-
-                <div>
-                  <Link href="/hyprconf" className="group flex items-start gap-3">
-                    <span
-                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: "#a6e3a1" }}
-                    />
-                    <div>
-                      <h3 className="font-serif text-xl text-foreground">Config Creator</h3>
-                      <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
-                        Build a complete hyprland.conf with keybinds, window rules, monitor setup, input devices, and autostart programs.
-                      </p>
-                      <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                        Open config creator <ArrowRight size={11} />
-                      </span>
-                    </div>
-                  </Link>
-                </div>
-
-                <div>
-                  <Link href="/hyprinstall" className="group flex items-start gap-3">
-                    <span
-                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: "#f5c2e7" }}
-                    />
-                    <div>
-                      <h3 className="font-serif text-xl text-foreground">Installer</h3>
-                      <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
-                        Generate a one-command install script that sets up Hyprland, Waybar, all configs, packages, and post-install setup for Arch, Fedora, or Ubuntu.
-                      </p>
-                      <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                        Open installer <ArrowRight size={11} />
-                      </span>
-                    </div>
-                  </Link>
-                </div>
+                {cat.tools.map((tool) => (
+                  <div key={tool.slug}>
+                    <Link href={`/${tool.slug}`} className="group flex items-start gap-3">
+                      {tool.dotColor && (
+                        <span
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                          style={{ backgroundColor: tool.dotColor }}
+                        />
+                      )}
+                      <div>
+                        <h3 className="font-serif text-xl text-foreground">{tool.title}</h3>
+                        <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
+                          {tool.homeDescription}
+                        </p>
+                        <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                          {tool.cta} <ArrowRight size={11} />
+                        </span>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          ))}
 
-          {/* Niri — full-width section */}
-          <div className="mt-12">
-            <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
-              Niri
-            </p>
-            <div className="mt-1 h-px w-full bg-border" />
-
-            <div className="mt-8 space-y-6">
-              <div>
-                <Link href="/niri" className="group flex items-start gap-3">
-                  <span
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: "#74c7ec" }}
-                  />
-                  <div>
-                    <h3 className="font-serif text-xl text-foreground">Theme Designer</h3>
-                    <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
-                      Visual customizer for Niri&apos;s scrollable column layout — focus ring, gaps, blur, animations, and Waybar styling with a live column preview.
-                    </p>
-                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Open theme designer <ArrowRight size={11} />
-                    </span>
+          {/* Remaining full categories (Rofi, etc.) */}
+          {TOOL_CATEGORIES.filter((c) => c.homeLayout === "full").slice(1).map((cat) => (
+            <div key={cat.id} className="mt-12">
+              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
+                {cat.docsLabel}
+              </p>
+              <div className="mt-1 h-px w-full bg-border" />
+              <div className="mt-6">
+                {cat.tools.map((tool) => (
+                  <div key={tool.slug}>
+                    <Link href={`/${tool.slug}`} className="group">
+                      <h3 className="font-serif text-2xl text-foreground">{tool.title}</h3>
+                      <p className="mt-1.5 text-sm font-sans text-muted-foreground leading-relaxed max-w-lg">
+                        {tool.homeDescription}
+                      </p>
+                      <span className="mt-2 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                        {tool.cta} <ArrowRight size={11} />
+                      </span>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-
-              <div>
-                <Link href="/niriconf" className="group flex items-start gap-3">
-                  <span
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: "#94e2d5" }}
-                  />
-                  <div>
-                    <h3 className="font-serif text-xl text-foreground">Config Creator</h3>
-                    <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
-                      Build a complete config.kdl with keybinds, window rules, column widths, input devices, and spawn-at-startup programs.
-                    </p>
-                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Open config creator <ArrowRight size={11} />
-                    </span>
-                  </div>
-                </Link>
-              </div>
-
-              <div>
-                <Link href="/niriinstall" className="group flex items-start gap-3">
-                  <span
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: "#f2cdcd" }}
-                  />
-                  <div>
-                    <h3 className="font-serif text-xl text-foreground">Installer</h3>
-                    <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
-                      Generate a one-command install script that sets up Niri, Waybar, all configs, packages, and post-install setup for Arch, Fedora, or Ubuntu.
-                    </p>
-                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Open installer <ArrowRight size={11} />
-                    </span>
-                  </div>
-                </Link>
+                ))}
               </div>
             </div>
-          </div>
-
-          {/* Rofi — full-width below */}
-          <div className="mt-12">
-            <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
-              Launcher
-            </p>
-            <div className="mt-1 h-px w-full bg-border" />
-            <div className="mt-6">
-              <Link href="/rofi" className="group">
-                <h3 className="font-serif text-2xl text-foreground">Rofi</h3>
-                <p className="mt-1.5 text-sm font-sans text-muted-foreground leading-relaxed max-w-lg">
-                  Application launcher and dmenu replacement. Design grid and list modes, customize the input bar, and style every element. Export as a .rasi theme file.
-                </p>
-                <span className="mt-2 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                  Customize Rofi <ArrowRight size={11} />
-                </span>
-              </Link>
-            </div>
-          </div>
+          ))}
         </section>
 
         {/* SEO Content */}

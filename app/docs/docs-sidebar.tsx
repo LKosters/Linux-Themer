@@ -4,70 +4,27 @@ import { useState } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { ChevronRight, Monitor, Columns3, Layout, AppWindow, Menu, X } from "lucide-react"
+import { getDocsCategories } from "@/lib/tools-config"
 
-interface NavItem {
-  slug: string
-  label: string
-}
+const ICON_MAP = {
+  "monitor": Monitor,
+  "columns-3": Columns3,
+  "layout": Layout,
+  "app-window": AppWindow,
+} as const
 
-interface NavCategory {
-  id: string
-  label: string
-  icon: React.ElementType
-  items: NavItem[]
-}
-
-const NAV_TREE: NavCategory[] = [
-  {
-    id: "desktop",
-    label: "Desktop Environments",
-    icon: Monitor,
-    items: [
-      { slug: "gnome", label: "GNOME" },
-      { slug: "cinnamon", label: "Cinnamon" },
-      { slug: "kde", label: "KDE Plasma" },
-    ],
-  },
-  {
-    id: "hyprland",
-    label: "Hyprland",
-    icon: Columns3,
-    items: [
-      { slug: "hyprland", label: "Theme" },
-      { slug: "hyprinstall", label: "Installer" },
-    ],
-  },
-  {
-    id: "niri",
-    label: "Niri",
-    icon: Layout,
-    items: [
-      { slug: "niri", label: "Theme" },
-      { slug: "niriinstall", label: "Installer" },
-    ],
-  },
-  {
-    id: "launcher",
-    label: "Launchers",
-    icon: AppWindow,
-    items: [
-      { slug: "rofi", label: "Rofi" },
-    ],
-  },
-]
+const DOCS_CATEGORIES = getDocsCategories()
 
 function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
   const activeSlug = pathname.replace("/docs/", "").replace("/docs", "")
 
-  const getInitialOpen = () => {
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(() => {
     const open: Record<string, boolean> = {}
-    for (const cat of NAV_TREE) {
-      open[cat.id] = cat.items.some((item) => item.slug === activeSlug) || true
+    for (const cat of DOCS_CATEGORIES) {
+      open[cat.id] = true
     }
     return open
-  }
-
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(getInitialOpen)
+  })
 
   const toggle = (id: string) => {
     setOpenCategories((prev) => ({ ...prev, [id]: !prev[id] }))
@@ -89,10 +46,10 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
 
       <div className="my-2 h-px bg-border" />
 
-      {NAV_TREE.map((category) => {
-        const Icon = category.icon
+      {DOCS_CATEGORIES.map((category) => {
+        const Icon = ICON_MAP[category.icon]
         const isOpen = openCategories[category.id] ?? true
-        const hasActiveChild = category.items.some((item) => item.slug === activeSlug)
+        const hasActiveChild = category.tools.some((t) => t.slug === activeSlug)
 
         return (
           <div key={category.id}>
@@ -105,7 +62,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
               }`}
             >
               <Icon size={15} className="shrink-0" />
-              <span className="flex-1 text-left">{category.label}</span>
+              <span className="flex-1 text-left">{category.docsLabel}</span>
               <ChevronRight
                 size={14}
                 className={`shrink-0 text-muted-foreground/50 transition-transform duration-200 ${
@@ -116,18 +73,18 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
 
             {isOpen && (
               <div className="ml-4 mt-0.5 flex flex-col gap-0.5 border-l border-border pl-3">
-                {category.items.map((item) => (
+                {category.tools.map((tool) => (
                   <Link
-                    key={item.slug}
-                    href={`/docs/${item.slug}`}
+                    key={tool.slug}
+                    href={`/docs/${tool.slug}`}
                     onClick={onNavigate}
                     className={`rounded-md px-2.5 py-1.5 text-sm font-sans transition-colors ${
-                      activeSlug === item.slug
+                      activeSlug === tool.slug
                         ? "bg-accent/10 text-accent"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
-                    {item.label}
+                    {tool.navLabel}
                   </Link>
                 ))}
               </div>

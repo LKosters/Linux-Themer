@@ -84,7 +84,7 @@ const WINDOW_LIST: AppItem[] = [
 function RofiWindow({ items }: { items: AppItem[] }) {
   const { theme } = useRofiTheme()
 
-  const scaleFactor = 0.45
+  const scaleFactor = 0.55
   const scaledPadding = Math.max(Math.round((theme.windowPadding ?? 20) * scaleFactor), 4)
   const scaledInputPadding = Math.max(Math.round((theme.inputbarPadding ?? 10) * scaleFactor), 3)
   const scaledElementPadding = Math.max(Math.round((theme.elementPadding ?? 8) * scaleFactor), 2)

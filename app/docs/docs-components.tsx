@@ -1,21 +1,6 @@
 import { Info } from "lucide-react"
 export { CodeBlock } from "./code-block"
 
-export function DocsPageHeader({
-  title,
-  description,
-}: {
-  title: string
-  description: string
-}) {
-  return (
-    <div className="mb-10">
-      <h2 className="font-serif text-3xl text-foreground mb-2">{title}</h2>
-      <p className="text-sm font-sans text-muted-foreground">{description}</p>
-    </div>
-  )
-}
-
 export function Step({
   number,
   icon: Icon,

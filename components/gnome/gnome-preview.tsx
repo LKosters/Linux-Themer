@@ -175,12 +175,12 @@ function CloseButton({ color }: { color: string }) {
     <button
       className="flex items-center justify-center rounded-full transition-colors hover:bg-red-500/80 group"
       style={{
-        width: 14,
-        height: 14,
+        width: 16,
+        height: 16,
         backgroundColor: `${color}15`,
       }}
     >
-      <X size={8} className="opacity-70 group-hover:text-white group-hover:opacity-100" style={{ color }} />
+      <X size={10} className="opacity-70 group-hover:text-white group-hover:opacity-100" style={{ color }} />
     </button>
   )
 }
@@ -235,22 +235,22 @@ function FileManagerWindow() {
           backgroundColor: theme.windowHeaderBg,
           color: theme.windowHeaderText,
           borderRadius: `${radius}px ${radius}px 0 0`,
-          minHeight: 28,
+          minHeight: 30,
         }}
       >
         {/* Left: nav buttons */}
         <div className="flex items-center gap-0.5">
           <div
             className="flex items-center justify-center rounded"
-            style={{ width: 18, height: 18, backgroundColor: `${theme.windowHeaderText}10` }}
+            style={{ width: 20, height: 20, backgroundColor: `${theme.windowHeaderText}10` }}
           >
-            <ChevronLeft size={10} style={{ color: `${theme.windowHeaderText}60` }} />
+            <ChevronLeft size={12} style={{ color: `${theme.windowHeaderText}60` }} />
           </div>
           <div
             className="flex items-center justify-center rounded"
-            style={{ width: 18, height: 18, backgroundColor: `${theme.windowHeaderText}10` }}
+            style={{ width: 20, height: 20, backgroundColor: `${theme.windowHeaderText}10` }}
           >
-            <ChevronRight size={10} style={{ color: `${theme.windowHeaderText}60` }} />
+            <ChevronRight size={12} style={{ color: `${theme.windowHeaderText}60` }} />
           </div>
         </div>
 
@@ -260,9 +260,9 @@ function FileManagerWindow() {
             className="flex items-center gap-0.5 rounded px-2 py-0.5"
             style={{ backgroundColor: `${theme.windowHeaderText}08` }}
           >
-            <Home size={8} style={{ color: `${theme.windowHeaderText}80` }} />
-            <ChevronRight size={6} style={{ color: `${theme.windowHeaderText}40` }} />
-            <span className="text-[8px] font-sans font-medium" style={{ color: `${theme.windowHeaderText}cc` }}>
+            <Home size={10} style={{ color: `${theme.windowHeaderText}80` }} />
+            <ChevronRight size={8} style={{ color: `${theme.windowHeaderText}40` }} />
+            <span className="text-[10px] font-sans font-medium" style={{ color: `${theme.windowHeaderText}cc` }}>
               Home
             </span>
           </div>
@@ -270,7 +270,7 @@ function FileManagerWindow() {
 
         {/* Right: search + close */}
         <div className="flex items-center gap-1.5">
-          <Search size={10} style={{ color: `${theme.windowHeaderText}60` }} />
+          <Search size={12} style={{ color: `${theme.windowHeaderText}60` }} />
           <CloseButton color={theme.windowHeaderText} />
         </div>
       </div>
@@ -288,13 +288,13 @@ function FileManagerWindow() {
           {sidebarItems.map(({ name, icon: Icon, active }) => (
             <div
               key={name}
-              className="flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[7px] font-sans transition-colors"
+              className="flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[9px] font-sans transition-colors"
               style={{
                 color: active ? theme.windowHeaderText : `${theme.windowHeaderText}b0`,
                 backgroundColor: active ? `${theme.accentColor}25` : "transparent",
               }}
             >
-              <Icon size={8} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
+              <Icon size={10} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
               {name}
             </div>
           ))}
@@ -302,7 +302,7 @@ function FileManagerWindow() {
 
         {/* Main content grid */}
         <div className="flex-1 p-2 overflow-hidden">
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="grid grid-cols-3 gap-2">
             {contentFolders.map(({ name, icon: Icon }) => (
               <div
                 key={name}
@@ -311,15 +311,15 @@ function FileManagerWindow() {
                 <div
                   className="flex items-center justify-center rounded-lg"
                   style={{
-                    width: 30,
-                    height: 26,
+                    width: 34,
+                    height: 30,
                     backgroundColor: `${theme.accentColor}20`,
                   }}
                 >
-                  <Icon size={14} style={{ color: theme.accentColor }} />
+                  <Icon size={16} style={{ color: theme.accentColor }} />
                 </div>
                 <span
-                  className="text-[6px] font-sans text-center leading-tight"
+                  className="text-[8px] font-sans text-center leading-tight"
                   style={{ color: theme.windowHeaderText }}
                 >
                   {name}
@@ -382,11 +382,11 @@ function SettingsWindow() {
           backgroundColor: theme.windowHeaderBg,
           color: theme.windowHeaderText,
           borderRadius: `${radius}px ${radius}px 0 0`,
-          minHeight: 28,
+          minHeight: 30,
         }}
       >
         <div style={{ width: 14 }} />
-        <span className="flex-1 text-center text-[10px] font-medium font-sans">Settings</span>
+        <span className="flex-1 text-center text-[11px] font-medium font-sans">Settings</span>
         <CloseButton color={theme.windowHeaderText} />
       </div>
 
@@ -403,13 +403,13 @@ function SettingsWindow() {
           {sidebarItems.map(({ name, icon: Icon, active }) => (
             <div
               key={name}
-              className="flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[7px] font-sans transition-colors"
+              className="flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[9px] font-sans transition-colors"
               style={{
                 color: active ? theme.windowHeaderText : `${theme.windowHeaderText}b0`,
                 backgroundColor: active ? `${theme.accentColor}25` : "transparent",
               }}
             >
-              <Icon size={8} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
+              <Icon size={10} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
               {name}
             </div>
           ))}
@@ -418,7 +418,7 @@ function SettingsWindow() {
         {/* Main content — libadwaita preference groups */}
         <div className="flex-1 p-2.5 overflow-hidden">
           <span
-            className="text-[8px] font-medium font-sans block mb-2"
+            className="text-[10px] font-medium font-sans block mb-2"
             style={{ color: `${theme.windowHeaderText}90` }}
           >
             Style
@@ -431,8 +431,8 @@ function SettingsWindow() {
                 <div
                   className="rounded-lg border-2 overflow-hidden"
                   style={{
-                    width: 32,
-                    height: 22,
+                    width: 38,
+                    height: 26,
                     borderColor: mode === "Dark" ? theme.accentColor : `${theme.windowHeaderText}15`,
                   }}
                 >
@@ -453,7 +453,7 @@ function SettingsWindow() {
                   />
                 </div>
                 <span
-                  className="text-[6px] font-sans"
+                  className="text-[8px] font-sans"
                   style={{
                     color: mode === "Dark" ? theme.accentColor : `${theme.windowHeaderText}50`,
                   }}
@@ -470,7 +470,7 @@ function SettingsWindow() {
             style={{ backgroundColor: `${theme.windowHeaderText}08` }}
           >
             <span
-              className="text-[7px] font-sans block mb-1.5"
+              className="text-[9px] font-sans block mb-1.5"
               style={{ color: `${theme.windowHeaderText}70` }}
             >
               Accent Color
@@ -490,8 +490,8 @@ function SettingsWindow() {
                   key={`${color}-${i}`}
                   className="rounded-full"
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: 12,
+                    height: 12,
                     backgroundColor: color,
                     outline:
                       color === theme.accentColor

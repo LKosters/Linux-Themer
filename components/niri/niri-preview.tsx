@@ -283,26 +283,39 @@ function TerminalColumn({ active }: { active: boolean }) {
 
   const lines = [
     { prompt: true, text: "neofetch" },
-    { prompt: false, text: "  ╭─────────────────────╮" },
-    { prompt: false, text: "  │  OS: Arch Linux      │" },
-    { prompt: false, text: "  │  WM: niri             │" },
-    { prompt: false, text: "  │  Shell: fish          │" },
-    { prompt: false, text: "  │  Terminal: alacritty   │" },
-    { prompt: false, text: "  ╰─────────────────────╯" },
+    { prompt: false, text: "         ...." },
+    { prompt: false, text: "       .####." },
+    { prompt: false, text: "      .######." },
+    { prompt: false, text: "" },
+    { prompt: false, text: "  OS: Arch Linux x86_64" },
+    { prompt: false, text: "  Host: ThinkPad X1 Carbon" },
+    { prompt: false, text: "  Kernel: 6.12.7-arch1-1" },
+    { prompt: false, text: "  WM: niri (Wayland)" },
+    { prompt: false, text: "  Shell: fish 3.7" },
+    { prompt: false, text: "  Terminal: alacritty" },
+    { prompt: false, text: "  Packages: 1142 (pacman)" },
+    { prompt: false, text: "  Memory: 2.8G / 16G" },
     { prompt: true, text: "" },
   ]
 
   return (
     <div className="flex flex-col overflow-hidden h-full" style={containerStyle}>
-      <div className="flex items-center px-2 py-0.5 shrink-0" style={{ backgroundColor: blurBg }}>
-        <TerminalIcon size={8} style={{ color: theme.accentColor }} />
-        <span className="text-[8px] font-mono ml-1.5" style={{ color: `${theme.barText}cc` }}>
-          alacritty
-        </span>
+      <div className="flex items-center justify-between px-2.5 py-1 shrink-0" style={{ backgroundColor: blurBg, borderBottom: `1px solid ${theme.barText}10` }}>
+        <div className="flex items-center">
+          <TerminalIcon size={11} style={{ color: theme.accentColor }} />
+          <span className="text-[10px] font-mono ml-1.5" style={{ color: `${theme.barText}cc` }}>
+            alacritty
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#f5c2e7" }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#a6e3a1" }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#f38ba8" }} />
+        </div>
       </div>
       <div className="flex-1 overflow-hidden p-2" style={{ backgroundColor: blurBg }}>
         {lines.map((line, i) => (
-          <div key={i} className="text-[7px] font-mono leading-[11px]">
+          <div key={i} className="text-[9px] font-mono leading-[14px]">
             {line.prompt ? (
               <>
                 <span style={{ color: theme.accentColor }}>  ~</span>
@@ -337,13 +350,19 @@ function EditorColumn({ active }: { active: boolean }) {
   const { containerStyle, blurBg, theme } = useWindowStyles(active)
 
   const lines = [
-    { num: 1, content: [{ text: "fn ", c: "kw" }, { text: "main", c: "fn" }, { text: "() {", c: "p" }] },
-    { num: 2, content: [{ text: '    println!("', c: "p" }, { text: "Hello, Niri!", c: "str" }, { text: '");', c: "p" }] },
-    { num: 3, content: [{ text: "    ", c: "p" }, { text: "let", c: "kw" }, { text: " cols = ", c: "p" }, { text: "Layout", c: "fn" }, { text: "::columns();", c: "p" }] },
-    { num: 4, content: [{ text: "    cols.", c: "p" }, { text: "scroll_left", c: "fn" }, { text: "();", c: "p" }] },
-    { num: 5, content: [{ text: "}", c: "p" }] },
-    { num: 6, content: [] },
-    { num: 7, content: [{ text: "// scrollable tiling", c: "cm" }] },
+    { num: 1, content: [{ text: "use ", c: "kw" }, { text: "std::fs", c: "fn" }, { text: ";", c: "p" }] },
+    { num: 2, content: [{ text: "use ", c: "kw" }, { text: "serde", c: "fn" }, { text: "::{", c: "p" }, { text: "Deserialize", c: "fn" }, { text: "};", c: "p" }] },
+    { num: 3, content: [] },
+    { num: 4, content: [{ text: "#[derive(Deserialize)]", c: "cm" }] },
+    { num: 5, content: [{ text: "struct ", c: "kw" }, { text: "Column", c: "fn" }, { text: " {", c: "p" }] },
+    { num: 6, content: [{ text: "    width: ", c: "p" }, { text: "f64", c: "kw" }, { text: ",", c: "p" }] },
+    { num: 7, content: [{ text: "    is_active: ", c: "p" }, { text: "bool", c: "kw" }, { text: ",", c: "p" }] },
+    { num: 8, content: [{ text: "}", c: "p" }] },
+    { num: 9, content: [] },
+    { num: 10, content: [{ text: "fn ", c: "kw" }, { text: "scroll_columns", c: "fn" }, { text: "() {", c: "p" }] },
+    { num: 11, content: [{ text: '    let cols = Column::default();', c: "p" }] },
+    { num: 12, content: [{ text: '    println!("', c: "p" }, { text: "scrolling", c: "str" }, { text: '");', c: "p" }] },
+    { num: 13, content: [{ text: "}", c: "p" }] },
   ]
 
   const colorMap: Record<string, string> = {
@@ -356,11 +375,18 @@ function EditorColumn({ active }: { active: boolean }) {
 
   return (
     <div className="flex flex-col overflow-hidden h-full" style={containerStyle}>
-      <div className="flex items-center px-2 py-0.5 shrink-0" style={{ backgroundColor: blurBg }}>
-        <FileText size={8} style={{ color: theme.accentColor }} />
-        <span className="text-[8px] font-mono ml-1.5" style={{ color: `${theme.barText}cc` }}>
-          main.rs
-        </span>
+      <div className="flex items-center justify-between px-2.5 py-1 shrink-0" style={{ backgroundColor: blurBg, borderBottom: `1px solid ${theme.barText}10` }}>
+        <div className="flex items-center">
+          <FileText size={11} style={{ color: theme.accentColor }} />
+          <span className="text-[10px] font-mono ml-1.5" style={{ color: `${theme.barText}cc` }}>
+            main.rs
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#f5c2e7" }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#a6e3a1" }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#f38ba8" }} />
+        </div>
       </div>
       <div className="flex-1 overflow-hidden" style={{ backgroundColor: blurBg }}>
         <div className="flex h-full">
@@ -369,14 +395,14 @@ function EditorColumn({ active }: { active: boolean }) {
             style={{ borderRight: `1px solid ${theme.barText}12` }}
           >
             {lines.map(({ num }) => (
-              <span key={num} className="text-[7px] font-mono leading-[11px]" style={{ color: `${theme.barText}30` }}>
+              <span key={num} className="text-[9px] font-mono leading-[14px]" style={{ color: `${theme.barText}30` }}>
                 {num}
               </span>
             ))}
           </div>
           <div className="flex-1 py-1 px-2">
             {lines.map(({ num, content }) => (
-              <div key={num} className="text-[7px] font-mono leading-[11px]">
+              <div key={num} className="text-[9px] font-mono leading-[14px]">
                 {content.map((seg, i) => (
                   <span key={i} style={{ color: colorMap[seg.c] || theme.barText }}>{seg.text}</span>
                 ))}
@@ -398,16 +424,25 @@ function FileManagerColumn({ active }: { active: boolean }) {
     { name: ".config", icon: Folder },
     { name: "Documents", icon: Folder },
     { name: "Downloads", icon: Folder },
+    { name: "Pictures", icon: Folder },
+    { name: ".bashrc", icon: FileText },
     { name: "notes.md", icon: FileText },
   ]
 
   return (
     <div className="flex flex-col overflow-hidden h-full" style={containerStyle}>
-      <div className="flex items-center px-2 py-0.5 shrink-0" style={{ backgroundColor: blurBg }}>
-        <Folder size={8} style={{ color: theme.accentColor }} />
-        <span className="text-[8px] font-mono ml-1.5" style={{ color: `${theme.barText}cc` }}>
-          ~/
-        </span>
+      <div className="flex items-center justify-between px-2.5 py-1 shrink-0" style={{ backgroundColor: blurBg, borderBottom: `1px solid ${theme.barText}10` }}>
+        <div className="flex items-center">
+          <Folder size={11} style={{ color: theme.accentColor }} />
+          <span className="text-[10px] font-mono ml-1.5" style={{ color: `${theme.barText}cc` }}>
+            ~/
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#f5c2e7" }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#a6e3a1" }} />
+          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#f38ba8" }} />
+        </div>
       </div>
       <div className="flex-1 overflow-hidden p-1.5" style={{ backgroundColor: blurBg }}>
         {items.map(({ name, icon: Icon }) => (
@@ -415,8 +450,8 @@ function FileManagerColumn({ active }: { active: boolean }) {
             key={name}
             className="flex items-center gap-1.5 rounded px-1.5 py-0.5 hover:bg-white/5 transition-colors"
           >
-            <Icon size={8} style={{ color: name.includes(".") ? `${theme.barText}70` : theme.accentColor }} />
-            <span className="text-[7px] font-mono" style={{ color: theme.barText }}>{name}</span>
+            <Icon size={11} style={{ color: name.includes(".") ? `${theme.barText}70` : theme.accentColor }} />
+            <span className="text-[9px] font-mono" style={{ color: theme.barText }}>{name}</span>
           </div>
         ))}
       </div>

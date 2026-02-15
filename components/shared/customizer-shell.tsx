@@ -3,71 +3,19 @@
 import { Fragment } from "react"
 import Link from "next/link"
 import { SiteHeader } from "./site-header"
-
-type DE = "gnome" | "cinnamon" | "kde" | "hyprland" | "rofi" | "hyprconf" | "hyprinstall" | "niri" | "niriconf" | "niriinstall"
-
-interface NavItem {
-  value: DE
-  label: string
-}
-
-interface NavCategory {
-  id: string
-  label: string
-  items: NavItem[]
-}
-
-const NAV_CATEGORIES: NavCategory[] = [
-  {
-    id: "de",
-    label: "Desktop",
-    items: [
-      { value: "gnome", label: "GNOME" },
-      { value: "cinnamon", label: "Cinnamon" },
-      { value: "kde", label: "KDE Plasma" },
-    ],
-  },
-  {
-    id: "hyprland",
-    label: "Hyprland",
-    items: [
-      { value: "hyprland", label: "Theme" },
-      { value: "hyprconf", label: "Config" },
-      { value: "hyprinstall", label: "Installer" },
-    ],
-  },
-  {
-    id: "niri",
-    label: "Niri",
-    items: [
-      { value: "niri", label: "Theme" },
-      { value: "niriconf", label: "Config" },
-      { value: "niriinstall", label: "Installer" },
-    ],
-  },
-  {
-    id: "launcher",
-    label: "Launcher",
-    items: [
-      { value: "rofi", label: "Rofi" },
-    ],
-  },
-]
-
-function getActiveCategory(activeDe: DE): NavCategory {
-  return NAV_CATEGORIES.find((cat) => cat.items.some((item) => item.value === activeDe)) ?? NAV_CATEGORIES[0]
-}
+import { TOOL_CATEGORIES, FRAMELESS_SLUGS, getCategoryForSlug } from "@/lib/tools-config"
 
 export function CustomizerShell({
   activeDe,
   preview,
   controls,
 }: {
-  activeDe: DE
+  activeDe: string
   preview: React.ReactNode
   controls: React.ReactNode
 }) {
-  const activeCategory = getActiveCategory(activeDe)
+  const activeCategory = getCategoryForSlug(activeDe) ?? TOOL_CATEGORIES[0]
+  const isFrameless = FRAMELESS_SLUGS.has(activeDe)
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
@@ -75,7 +23,7 @@ export function CustomizerShell({
 
       {/* Desktop nav — grouped tabs with dividers */}
       <div className="hidden lg:flex items-center border-b border-border px-6">
-        {NAV_CATEGORIES.map((category, catIndex) => (
+        {TOOL_CATEGORIES.map((category, catIndex) => (
           <Fragment key={category.id}>
             {catIndex > 0 && (
               <div className="mx-3 h-4 w-px bg-border" />
@@ -84,18 +32,18 @@ export function CustomizerShell({
               <span className="mr-2 text-[9px] font-sans uppercase tracking-[0.15em] text-muted-foreground/50">
                 {category.label}
               </span>
-              {category.items.map((item) => (
+              {category.tools.map((tool) => (
                 <Link
-                  key={item.value}
-                  href={`/${item.value}`}
+                  key={tool.slug}
+                  href={`/${tool.slug}`}
                   className={`relative px-3 py-2.5 text-xs font-sans transition-colors ${
-                    activeDe === item.value
+                    activeDe === tool.slug
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {item.label}
-                  {activeDe === item.value && (
+                  {tool.navLabel}
+                  {activeDe === tool.slug && (
                     <span className="absolute bottom-0 left-3 right-3 h-px bg-accent" />
                   )}
                 </Link>
@@ -108,12 +56,12 @@ export function CustomizerShell({
       {/* Mobile nav — two-tier */}
       <div className="flex flex-col border-b border-border lg:hidden">
         <div className="flex items-center gap-1 px-4 py-1.5 border-b border-border/50">
-          {NAV_CATEGORIES.map((cat) => {
+          {TOOL_CATEGORIES.map((cat) => {
             const isActive = cat.id === activeCategory.id
             return (
               <Link
                 key={cat.id}
-                href={`/${cat.items[0].value}`}
+                href={`/${cat.tools[0].slug}`}
                 className={`rounded px-2 py-1 text-[10px] font-sans uppercase tracking-[0.1em] transition-colors ${
                   isActive
                     ? "bg-accent/15 text-accent"
@@ -125,20 +73,20 @@ export function CustomizerShell({
             )
           })}
         </div>
-        {activeCategory.items.length > 1 && (
+        {activeCategory.tools.length > 1 && (
           <div className="flex items-center gap-0 px-4 py-1.5">
-            {activeCategory.items.map((item) => (
+            {activeCategory.tools.map((tool) => (
               <Link
-                key={item.value}
-                href={`/${item.value}`}
+                key={tool.slug}
+                href={`/${tool.slug}`}
                 className={`relative px-2.5 py-1 text-xs font-sans transition-colors ${
-                  activeDe === item.value
+                  activeDe === tool.slug
                     ? "text-foreground"
                     : "text-muted-foreground"
                 }`}
               >
-                {item.label}
-                {activeDe === item.value && (
+                {tool.navLabel}
+                {activeDe === tool.slug && (
                   <span className="absolute bottom-0 left-2.5 right-2.5 h-px bg-accent" />
                 )}
               </Link>
@@ -149,24 +97,15 @@ export function CustomizerShell({
 
       <div className="flex flex-1 overflow-hidden">
         <main className="flex flex-1 flex-col overflow-hidden">
-          {activeDe === "hyprconf" || activeDe === "hyprinstall" || activeDe === "niriconf" || activeDe === "niriinstall" ? (
+          {isFrameless ? (
             <div className="flex-1 overflow-hidden">
               {preview}
             </div>
           ) : (
-            <div className="flex flex-1 items-center justify-center overflow-auto p-6 lg:p-10">
-              <div className="w-full max-w-4xl">
-                <div className="overflow-hidden rounded-xl border border-border/50 bg-card shadow-2xl shadow-black/30">
-                  <div className="flex items-center justify-center bg-card py-1.5">
-                    <div className="h-1 w-1 rounded-full bg-muted-foreground/30" />
-                  </div>
-                  <div className="mx-1 mb-1">
-                    {preview}
-                  </div>
-                </div>
-                <div className="mx-auto flex flex-col items-center">
-                  <div className="h-5 w-16 rounded-b bg-card border-x border-b border-border/50" />
-                  <div className="h-1 w-24 rounded-b-lg bg-card border-x border-b border-border/50" />
+            <div className="flex flex-1 items-center justify-center overflow-auto p-4 lg:p-6">
+              <div className="w-full max-w-5xl">
+                <div className="overflow-hidden rounded-lg shadow-2xl shadow-black/50">
+                  {preview}
                 </div>
               </div>
             </div>

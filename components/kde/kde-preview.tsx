@@ -143,7 +143,7 @@ function DolphinWindow() {
           backgroundColor: theme.windowHeaderBg,
           color: theme.windowHeaderText,
           borderRadius: `${radius}px ${radius}px 0 0`,
-          minHeight: 26,
+          minHeight: 28,
         }}
       >
         <div className="flex items-center gap-1 flex-1">
@@ -167,20 +167,20 @@ function DolphinWindow() {
       >
         <div className="flex items-center gap-0.5">
           <div
-            className="rounded px-1.5 py-0.5 text-[7px] font-sans"
+            className="rounded px-1.5 py-0.5 text-[9px] font-sans"
             style={{ backgroundColor: `${theme.windowHeaderText}08`, color: `${theme.windowHeaderText}80` }}
           >
-            <Home size={8} />
+            <Home size={10} />
           </div>
           <ChevronRight size={6} style={{ color: `${theme.windowHeaderText}40` }} />
         </div>
         <div
-          className="flex-1 rounded px-1.5 py-0.5 text-[7px] font-sans"
+          className="flex-1 rounded px-1.5 py-0.5 text-[9px] font-sans"
           style={{ backgroundColor: `${theme.windowHeaderText}08`, color: `${theme.windowHeaderText}60` }}
         >
           /home/user
         </div>
-        <Search size={8} style={{ color: `${theme.windowHeaderText}50` }} />
+        <Search size={10} style={{ color: `${theme.windowHeaderText}50` }} />
       </div>
 
       {/* Content */}
@@ -194,7 +194,7 @@ function DolphinWindow() {
           }}
         >
           <span
-            className="text-[6px] font-sans font-medium uppercase px-1 mb-0.5"
+            className="text-[8px] font-sans font-medium uppercase px-1 mb-0.5"
             style={{ color: `${theme.windowHeaderText}50` }}
           >
             Places
@@ -202,13 +202,13 @@ function DolphinWindow() {
           {sidebarItems.map(({ name, icon: Icon, active }) => (
             <div
               key={name}
-              className="flex items-center gap-1 rounded px-1 py-0.5 text-[7px] font-sans"
+              className="flex items-center gap-1 rounded px-1 py-0.5 text-[9px] font-sans"
               style={{
                 color: active ? theme.windowHeaderText : `${theme.windowHeaderText}b0`,
                 backgroundColor: active ? `${theme.highlightColor}25` : "transparent",
               }}
             >
-              <Icon size={7} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
+              <Icon size={9} style={{ color: active ? theme.accentColor : `${theme.windowHeaderText}50` }} />
               {name}
             </div>
           ))}
@@ -219,10 +219,10 @@ function DolphinWindow() {
           {files.map(({ name, icon: Icon, isDir }) => (
             <div
               key={name}
-              className="flex items-center gap-1.5 rounded px-1 py-0.5 text-[7px] font-sans hover:bg-white/5 transition-colors"
+              className="flex items-center gap-1.5 rounded px-1 py-0.5 text-[9px] font-sans hover:bg-white/5 transition-colors"
               style={{ color: theme.windowHeaderText }}
             >
-              <Icon size={8} style={{ color: isDir ? theme.accentColor : `${theme.windowHeaderText}60` }} />
+              <Icon size={10} style={{ color: isDir ? theme.accentColor : `${theme.windowHeaderText}60` }} />
               {name}
             </div>
           ))}
@@ -263,7 +263,7 @@ function KonsoleWindow() {
           backgroundColor: theme.windowHeaderBg,
           color: theme.windowHeaderText,
           borderRadius: `${radius}px ${radius}px 0 0`,
-          minHeight: 26,
+          minHeight: 28,
         }}
       >
         <div className="flex items-center gap-1 flex-1">
@@ -279,7 +279,7 @@ function KonsoleWindow() {
 
       {/* Terminal content */}
       <div
-        className="flex-1 p-2 font-mono text-[7px] leading-[1.6] overflow-hidden"
+        className="flex-1 p-2 font-mono text-[9px] leading-[1.6] overflow-hidden"
         style={{ backgroundColor: "#0e1019", color: "#a0b0c0" }}
       >
         <div>
@@ -290,12 +290,12 @@ function KonsoleWindow() {
           <span style={{ color: "#c0cad0" }}>neofetch</span>
         </div>
         <div className="mt-1 flex gap-2">
-          <div className="text-[6px] leading-[1.5]" style={{ color: theme.accentColor }}>
+          <div className="text-[8px] leading-[1.5]" style={{ color: theme.accentColor }}>
             {"     /\\\n    /  \\\n   /    \\\n  /      \\\n /________\\".split("\n").map((line, i) => (
               <div key={i}>{line}</div>
             ))}
           </div>
-          <div className="text-[6px] leading-[1.5]">
+          <div className="text-[8px] leading-[1.5]">
             <div><span style={{ color: theme.accentColor }}>OS:</span> Arch Linux x86_64</div>
             <div><span style={{ color: theme.accentColor }}>DE:</span> KDE Plasma 6.2</div>
             <div><span style={{ color: theme.accentColor }}>WM:</span> KWin (Wayland)</div>
@@ -449,7 +449,7 @@ function PlasmaPanel() {
           >
             <Icon size={iconSize - 2} style={{ color: theme.panelText }} />
             <span
-              className="text-[8px] font-sans truncate"
+              className="text-[9px] font-sans truncate"
               style={{ color: active ? theme.panelText : `${theme.panelText}90` }}
             >
               {label}
