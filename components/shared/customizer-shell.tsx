@@ -3,7 +3,7 @@
 import { Monitor } from "lucide-react"
 import Link from "next/link"
 
-type DE = "gnome" | "cinnamon" | "hyprland" | "rofi" | "hyprconf"
+type DE = "gnome" | "cinnamon" | "hyprland" | "rofi" | "hyprconf" | "hyprinstall"
 
 const DE_OPTIONS: { value: DE; label: string; description: string }[] = [
   { value: "gnome", label: "GNOME", description: "Modern, minimal" },
@@ -11,6 +11,7 @@ const DE_OPTIONS: { value: DE; label: string; description: string }[] = [
   { value: "hyprland", label: "Hyprland", description: "Tiling compositor" },
   { value: "rofi", label: "Rofi", description: "App launcher" },
   { value: "hyprconf", label: "Hypr Config", description: "Full config" },
+  { value: "hyprinstall", label: "Hyprland Installer", description: "Full setup" },
 ]
 
 export function CustomizerShell({
@@ -71,7 +72,7 @@ export function CustomizerShell({
 
       <div className="flex flex-1 overflow-hidden">
         <main className="flex flex-1 flex-col overflow-hidden">
-          {activeDe === "hyprconf" ? (
+          {activeDe === "hyprconf" || activeDe === "hyprinstall" ? (
             <div className="flex-1 overflow-hidden">
               {preview}
             </div>

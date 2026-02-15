@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
 export interface HyprlandTheme {
   // Borders
@@ -15,6 +15,7 @@ export interface HyprlandTheme {
   gapsIn: number
   gapsOut: number
   // Waybar
+  workspaceStyle: "numbers" | "dots" | "pills" | "roman" | "lines"
   barBg: string
   barText: string
   barOpacity: number
@@ -67,6 +68,7 @@ export const defaultTheme: HyprlandTheme = {
   borderGradientAngle: 45,
   gapsIn: 5,
   gapsOut: 10,
+  workspaceStyle: "numbers",
   barBg: "#1e1e2e",
   barText: "#cdd6f4",
   barOpacity: 0.95,
@@ -431,6 +433,15 @@ export function HyprlandThemeProvider({
   onThemeChange?: (theme: HyprlandTheme) => void
 }) {
   const [theme, setThemeState] = useState<HyprlandTheme>(initialTheme ?? defaultTheme)
+
+  // Sync when initialTheme changes externally (e.g. install preview)
+  const initialThemeStr = initialTheme ? JSON.stringify(initialTheme) : ""
+  useEffect(() => {
+    if (initialTheme) {
+      setThemeState(initialTheme)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialThemeStr])
 
   const setTheme = (newTheme: HyprlandTheme) => {
     setThemeState(newTheme)

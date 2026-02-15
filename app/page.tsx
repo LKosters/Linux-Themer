@@ -37,6 +37,13 @@ const DE_CARDS = [
     accent: "#a6e3a1",
     gradient: "from-green-500/20 to-teal-500/20",
   },
+  {
+    slug: "hyprinstall",
+    name: "Hypr Installer",
+    description: "Generate a one-click install script for Hyprland with packages, config, Waybar, and keybinds.",
+    accent: "#f5c2e7",
+    gradient: "from-pink-500/20 to-rose-500/20",
+  },
 ]
 
 const FEATURES = [

@@ -82,6 +82,18 @@ export function HyprlandThemeControls() {
             value={theme.barPosition}
             onChange={(v) => updateTheme({ barPosition: v })}
           />
+          <OptionButtons
+            label="Workspaces"
+            options={[
+              { label: "123", value: "numbers" as const },
+              { label: "Dots", value: "dots" as const },
+              { label: "Pills", value: "pills" as const },
+              { label: "Roman", value: "roman" as const },
+              { label: "Lines", value: "lines" as const },
+            ]}
+            value={theme.workspaceStyle ?? "numbers"}
+            onChange={(v) => updateTheme({ workspaceStyle: v })}
+          />
           <ColorInput
             label="Background"
             value={theme.barBg}

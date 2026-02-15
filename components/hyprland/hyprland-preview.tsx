@@ -12,6 +12,139 @@ import {
   Terminal as TerminalIcon,
 } from "lucide-react"
 
+// ── Workspace Indicators ─────────────────────────────────────────────────────
+
+const ROMAN = ["I", "II", "III", "IV", "V"]
+
+function WorkspaceIndicators({
+  style,
+  accent,
+  barBg,
+  barText,
+  modRadius,
+  modSpacing,
+  fontSize,
+}: {
+  style: "numbers" | "dots" | "pills" | "roman" | "lines"
+  accent: string
+  barBg: string
+  barText: string
+  modRadius: number
+  modSpacing: number
+  fontSize: number
+}) {
+  const active = 0 // first workspace is active
+  const workspaces = [0, 1, 2, 3, 4]
+
+  if (style === "dots") {
+    return (
+      <div className="flex items-center" style={{ gap: `${modSpacing + 2}px` }}>
+        {workspaces.map((ws) => (
+          <div
+            key={ws}
+            style={{
+              width: ws === active ? 10 : 6,
+              height: 6,
+              borderRadius: 3,
+              backgroundColor: ws === active ? accent : `${barText}40`,
+              transition: "all 0.15s",
+            }}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (style === "lines") {
+    return (
+      <div className="flex items-center" style={{ gap: `${modSpacing + 1}px` }}>
+        {workspaces.map((ws) => (
+          <div
+            key={ws}
+            style={{
+              width: ws === active ? 16 : 10,
+              height: 3,
+              borderRadius: 1.5,
+              backgroundColor: ws === active ? accent : `${barText}35`,
+              transition: "all 0.15s",
+            }}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (style === "pills") {
+    return (
+      <div className="flex items-center" style={{ gap: `${modSpacing}px` }}>
+        {workspaces.map((ws) => (
+          <div
+            key={ws}
+            className="flex items-center justify-center font-mono font-medium"
+            style={{
+              minWidth: 18,
+              height: 16,
+              paddingInline: 6,
+              fontSize: `${Math.max(fontSize - 2, 7)}px`,
+              borderRadius: 8,
+              backgroundColor: ws === active ? accent : `${barText}15`,
+              color: ws === active ? barBg : `${barText}70`,
+            }}
+          >
+            {ws + 1}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (style === "roman") {
+    return (
+      <div className="flex items-center" style={{ gap: `${modSpacing + 1}px` }}>
+        {workspaces.map((ws) => (
+          <div
+            key={ws}
+            className="flex items-center justify-center font-serif"
+            style={{
+              minWidth: 16,
+              height: 18,
+              fontSize: `${Math.max(fontSize - 1, 7)}px`,
+              borderRadius: Math.min(modRadius, 8),
+              backgroundColor: ws === active ? accent : "transparent",
+              color: ws === active ? barBg : `${barText}80`,
+              borderBottom: ws === active ? "none" : `1.5px solid ${barText}25`,
+            }}
+          >
+            {ROMAN[ws]}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  // Default: numbers
+  return (
+    <div className="flex items-center" style={{ gap: `${modSpacing}px` }}>
+      {workspaces.map((ws) => (
+        <div
+          key={ws}
+          className="flex items-center justify-center font-mono font-medium"
+          style={{
+            width: 18,
+            height: 18,
+            fontSize: `${Math.max(fontSize - 1, 7)}px`,
+            borderRadius: Math.min(modRadius, 8),
+            backgroundColor: ws === active ? accent : "transparent",
+            color: ws === active ? barBg : `${barText}80`,
+          }}
+        >
+          {ws + 1}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ── Waybar ───────────────────────────────────────────────────────────────────
 
 function Waybar() {
@@ -43,7 +176,7 @@ function Waybar() {
 
   return (
     <div
-      className="absolute flex items-center justify-between px-2"
+      className="absolute px-2"
       style={{
         [isTop ? "top" : "bottom"]: barMargin > 0 ? `${barMargin}px` : 0,
         left: barMargin > 0 ? `${barMargin}px` : 0,
@@ -56,29 +189,25 @@ function Waybar() {
         zIndex: 20,
         borderRadius: `${barRadius}px`,
         boxShadow: barMargin > 0 ? "0 2px 12px rgba(0,0,0,0.3)" : "none",
+        display: "grid",
+        gridTemplateColumns: "1fr auto 1fr",
+        alignItems: "center",
       }}
     >
-      {/* Workspaces */}
-      <div className="flex items-center" style={{ gap: `${modSpacing}px` }}>
-        {[1, 2, 3, 4, 5].map((ws) => (
-          <div
-            key={ws}
-            className="flex items-center justify-center font-mono font-medium"
-            style={{
-              width: 18,
-              height: 18,
-              fontSize: `${Math.max(fontSize - 1, 7)}px`,
-              borderRadius: Math.min(modRadius, 8),
-              backgroundColor: ws === 1 ? theme.accentColor : "transparent",
-              color: ws === 1 ? theme.barBg : `${theme.barText}80`,
-            }}
-          >
-            {ws}
-          </div>
-        ))}
+      {/* Workspaces — left-aligned */}
+      <div className="justify-self-start">
+        <WorkspaceIndicators
+          style={theme.workspaceStyle ?? "numbers"}
+          accent={theme.accentColor}
+          barBg={theme.barBg}
+          barText={theme.barText}
+          modRadius={modRadius}
+          modSpacing={modSpacing}
+          fontSize={fontSize}
+        />
       </div>
 
-      {/* Center: clock */}
+      {/* Center: clock — always centered */}
       <div
         className="flex items-center px-2.5 py-0.5 font-mono font-medium"
         style={{
@@ -92,7 +221,7 @@ function Waybar() {
       </div>
 
       {/* Right: system modules */}
-      <div className="flex items-center" style={{ gap: `${modSpacing}px` }}>
+      <div className="flex items-center justify-self-end" style={{ gap: `${modSpacing}px` }}>
         {[
           { icon: Wifi, label: "net" },
           { icon: Volume2, label: "vol" },

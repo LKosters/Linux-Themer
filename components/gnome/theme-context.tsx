@@ -53,7 +53,7 @@ export const defaultTheme: GnomeTheme = {
   wallpaperGradientTo: "#1a0a2e",
   wallpaperImageUrl: "",
   wallpaperImageOpacity: 1,
-  aspectRatio: "16/10",
+  aspectRatio: "16/9",
 }
 
 interface ThemeContextType {
