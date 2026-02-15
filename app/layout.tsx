@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     default: 'Linux Themer — Visual Config Builder for Linux Desktops',
     template: '%s | Linux Themer',
   },
-  description: 'Build and preview themes for GNOME, Cinnamon, Hyprland, and Rofi. Generate hyprland.conf, Waybar CSS, GTK stylesheets, and Rofi .rasi files with a live desktop preview. Export ready-to-use config files or share your setup via URL.',
+  description: 'Build and preview themes for GNOME, Cinnamon, KDE Plasma, Hyprland, Niri, and Rofi. Generate hyprland.conf, Niri config.kdl, Waybar CSS, GTK stylesheets, Plasma color schemes, and Rofi .rasi files with a live desktop preview. Export ready-to-use config files or share your setup via URL.',
 }
 
 export const viewport: Viewport = {

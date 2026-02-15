@@ -40,7 +40,7 @@ export default function HomePage() {
               </h2>
               <div className="mt-5 h-px w-20 bg-border" />
               <p className="mt-5 max-w-md text-sm md:text-base font-sans text-muted-foreground leading-relaxed">
-                Design themes for GNOME, KDE Plasma, Hyprland, Cinnamon, and Rofi with a live desktop preview.
+                Design themes for GNOME, KDE Plasma, Hyprland, Niri, Cinnamon, and Rofi with a live desktop preview.
                 Generate complete config files. Share your setup with a URL.
               </p>
               <div className="mt-8 flex items-center gap-3">
@@ -228,6 +228,70 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Niri — full-width section */}
+          <div className="mt-12">
+            <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
+              Niri
+            </p>
+            <div className="mt-1 h-px w-full bg-border" />
+
+            <div className="mt-8 space-y-6">
+              <div>
+                <Link href="/niri" className="group flex items-start gap-3">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: "#74c7ec" }}
+                  />
+                  <div>
+                    <h3 className="font-serif text-xl text-foreground">Theme Designer</h3>
+                    <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
+                      Visual customizer for Niri&apos;s scrollable column layout — focus ring, gaps, blur, animations, and Waybar styling with a live column preview.
+                    </p>
+                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                      Open theme designer <ArrowRight size={11} />
+                    </span>
+                  </div>
+                </Link>
+              </div>
+
+              <div>
+                <Link href="/niriconf" className="group flex items-start gap-3">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: "#94e2d5" }}
+                  />
+                  <div>
+                    <h3 className="font-serif text-xl text-foreground">Config Creator</h3>
+                    <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
+                      Build a complete config.kdl with keybinds, window rules, column widths, input devices, and spawn-at-startup programs.
+                    </p>
+                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                      Open config creator <ArrowRight size={11} />
+                    </span>
+                  </div>
+                </Link>
+              </div>
+
+              <div>
+                <Link href="/niriinstall" className="group flex items-start gap-3">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: "#f2cdcd" }}
+                  />
+                  <div>
+                    <h3 className="font-serif text-xl text-foreground">Installer</h3>
+                    <p className="mt-1 text-sm font-sans text-muted-foreground leading-relaxed">
+                      Generate a one-command install script that sets up Niri, Waybar, all configs, packages, and post-install setup for Arch, Fedora, or Ubuntu.
+                    </p>
+                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-sans text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                      Open installer <ArrowRight size={11} />
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+
           {/* Rofi — full-width below */}
           <div className="mt-12">
             <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-muted-foreground">
@@ -255,7 +319,7 @@ export default function HomePage() {
           <div className="mt-6 columns-1 md:columns-2 gap-10 text-sm font-sans text-muted-foreground leading-[1.75]">
             <p>
               Linux Themer is a browser-based visual configuration tool for Linux desktop environments.
-              Instead of manually editing GTK CSS files, KDE Plasma color schemes, Hyprland config, or Rofi .rasi stylesheets,
+              Instead of manually editing GTK CSS files, KDE Plasma color schemes, Hyprland config, Niri config.kdl, or Rofi .rasi stylesheets,
               you adjust sliders and color pickers while watching a live preview that simulates
               your actual desktop layout — panels, windows, docks, and Waybar included.
             </p>
@@ -264,8 +328,9 @@ export default function HomePage() {
               generate GTK CSS that you drop into <span className="text-foreground/70">~/.config/gtk-4.0/</span>.
               The KDE Plasma themer exports a <span className="text-foreground/70">.colors</span> scheme file for Plasma System Settings.
               The Hyprland tools produce a complete <span className="text-foreground/70">hyprland.conf</span>,
-              Waybar <span className="text-foreground/70">config.jsonc</span> and <span className="text-foreground/70">style.css</span>,
-              and the installer can generate a single shell script that sets up everything from packages to dotfiles.
+              and the Niri tools generate <span className="text-foreground/70">config.kdl</span> for Niri&apos;s scrollable-tiling compositor.
+              Both include Waybar <span className="text-foreground/70">config.jsonc</span> and <span className="text-foreground/70">style.css</span>,
+              and their installers generate a single shell script that sets up everything from packages to dotfiles.
               Rofi exports <span className="text-foreground/70">.rasi</span> theme files.
             </p>
             <p className="mt-4">
@@ -276,7 +341,7 @@ export default function HomePage() {
               and make it yours.
             </p>
             <p className="mt-4">
-              Whether you are setting up Hyprland for the first time with the full installer,
+              Whether you are setting up Hyprland or Niri for the first time with the full installer,
               fine-tuning your Waybar spacing, or building a GNOME theme from scratch,
               Linux Themer gives you a visual workflow with real-time feedback and
               config files that work out of the box on Arch, Fedora, Ubuntu, and other distributions.

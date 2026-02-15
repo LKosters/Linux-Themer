@@ -4,7 +4,7 @@ import { Fragment } from "react"
 import Link from "next/link"
 import { SiteHeader } from "./site-header"
 
-type DE = "gnome" | "cinnamon" | "kde" | "hyprland" | "rofi" | "hyprconf" | "hyprinstall"
+type DE = "gnome" | "cinnamon" | "kde" | "hyprland" | "rofi" | "hyprconf" | "hyprinstall" | "niri" | "niriconf" | "niriinstall"
 
 interface NavItem {
   value: DE
@@ -34,6 +34,15 @@ const NAV_CATEGORIES: NavCategory[] = [
       { value: "hyprland", label: "Theme" },
       { value: "hyprconf", label: "Config" },
       { value: "hyprinstall", label: "Installer" },
+    ],
+  },
+  {
+    id: "niri",
+    label: "Niri",
+    items: [
+      { value: "niri", label: "Theme" },
+      { value: "niriconf", label: "Config" },
+      { value: "niriinstall", label: "Installer" },
     ],
   },
   {
@@ -140,7 +149,7 @@ export function CustomizerShell({
 
       <div className="flex flex-1 overflow-hidden">
         <main className="flex flex-1 flex-col overflow-hidden">
-          {activeDe === "hyprconf" || activeDe === "hyprinstall" ? (
+          {activeDe === "hyprconf" || activeDe === "hyprinstall" || activeDe === "niriconf" || activeDe === "niriinstall" ? (
             <div className="flex-1 overflow-hidden">
               {preview}
             </div>

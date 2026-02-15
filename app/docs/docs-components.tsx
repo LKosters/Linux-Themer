@@ -6,6 +6,9 @@ const TABS = [
   { slug: "cinnamon", label: "Cinnamon" },
   { slug: "kde", label: "KDE Plasma" },
   { slug: "hyprland", label: "Hyprland" },
+  { slug: "hyprinstall", label: "Hypr Installer" },
+  { slug: "niri", label: "Niri" },
+  { slug: "niriinstall", label: "Niri Installer" },
   { slug: "rofi", label: "Rofi" },
 ]
 
