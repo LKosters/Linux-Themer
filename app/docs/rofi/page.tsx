@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FolderOpen, FileDown, Terminal, RefreshCw } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "Rofi Installation Guide",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RofiDocsPage() {
   return (
     <>
-      <DocsHeader active="rofi" />
+      <DocsPageHeader title="Rofi" description="How to install your custom Rofi .rasi theme file." />
 
       <Step number={1} icon={FileDown} title="Export your theme">
         <p>

@@ -1,49 +1,18 @@
 import { Info } from "lucide-react"
-import Link from "next/link"
+export { CodeBlock } from "./code-block"
 
-const TABS = [
-  { slug: "gnome", label: "GNOME" },
-  { slug: "cinnamon", label: "Cinnamon" },
-  { slug: "kde", label: "KDE Plasma" },
-  { slug: "hyprland", label: "Hyprland" },
-  { slug: "hyprinstall", label: "Hypr Installer" },
-  { slug: "niri", label: "Niri" },
-  { slug: "niriinstall", label: "Niri Installer" },
-  { slug: "rofi", label: "Rofi" },
-]
-
-export function DocsHeader({ active }: { active: string }) {
+export function DocsPageHeader({
+  title,
+  description,
+}: {
+  title: string
+  description: string
+}) {
   return (
-    <>
-      <h2 className="font-serif text-3xl text-foreground mb-2">
-        Installation Guide
-      </h2>
-      <p className="text-sm font-sans text-muted-foreground mb-6">
-        How to apply your exported theme to your Linux desktop.
-      </p>
-
-      <div className="flex gap-1 mb-10">
-        {TABS.map((tab) => (
-          <Link
-            key={tab.slug}
-            href={`/docs/${tab.slug}`}
-            className="rounded-md px-3 py-1.5 text-xs font-sans font-medium transition-all"
-            style={{
-              backgroundColor:
-                active === tab.slug ? "hsl(var(--accent) / 0.15)" : "transparent",
-              color:
-                active === tab.slug ? "hsl(var(--accent))" : "hsl(var(--muted-foreground))",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor:
-                active === tab.slug ? "hsl(var(--accent) / 0.3)" : "hsl(var(--border))",
-            }}
-          >
-            {tab.label}
-          </Link>
-        ))}
-      </div>
-    </>
+    <div className="mb-10">
+      <h2 className="font-serif text-3xl text-foreground mb-2">{title}</h2>
+      <p className="text-sm font-sans text-muted-foreground">{description}</p>
+    </div>
   )
 }
 
@@ -84,14 +53,6 @@ export function Code({ children }: { children: React.ReactNode }) {
     <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono text-foreground">
       {children}
     </code>
-  )
-}
-
-export function CodeBlock({ children }: { children: React.ReactNode }) {
-  return (
-    <pre className="mt-2 mb-1 overflow-x-auto rounded-lg bg-muted px-4 py-3 text-xs font-mono text-foreground whitespace-pre-wrap">
-      {children}
-    </pre>
   )
 }
 

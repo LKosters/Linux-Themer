@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FileDown, Terminal, RefreshCw, Shield } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "Niri Theme Guide",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function NiriDocsPage() {
   return (
     <>
-      <DocsHeader active="niri" />
+      <DocsPageHeader title="Niri Theme" description="How to apply your exported Niri theme config and Waybar CSS." />
 
       <Step number={1} icon={FileDown} title="Export your config files">
         <p>

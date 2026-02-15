@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FolderOpen, FileDown, Terminal, RefreshCw } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "Cinnamon Installation Guide",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function CinnamonDocsPage() {
   return (
     <>
-      <DocsHeader active="cinnamon" />
+      <DocsPageHeader title="Cinnamon" description="How to install your custom Cinnamon CSS theme on Linux Mint." />
 
       <Step number={1} icon={FileDown} title="Export your theme">
         <p>

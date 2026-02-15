@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FolderOpen, FileDown, Terminal, RefreshCw, Settings } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "KDE Plasma Installation Guide",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function KDEDocsPage() {
   return (
     <>
-      <DocsHeader active="kde" />
+      <DocsPageHeader title="KDE Plasma" description="How to install your custom KDE Plasma color scheme." />
 
       <Step number={1} icon={FileDown} title="Export your color scheme">
         <p>

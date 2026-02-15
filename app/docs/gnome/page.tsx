@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FolderOpen, FileDown, Terminal, RefreshCw } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "GNOME Installation Guide",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function GnomeDocsPage() {
   return (
     <>
-      <DocsHeader active="gnome" />
+      <DocsPageHeader title="GNOME" description="How to apply your custom GTK CSS theme to GNOME." />
 
       <Step number={1} icon={FileDown} title="Export your theme">
         <p>

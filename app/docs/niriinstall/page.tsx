@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FileDown, Terminal, RefreshCw, Shield, Settings } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "Niri Installer Guide",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function NiriInstallDocsPage() {
   return (
     <>
-      <DocsHeader active="niriinstall" />
+      <DocsPageHeader title="Niri Installer" description="How to use the generated install script to set up Niri in one command." />
 
       <Step number={1} icon={FileDown} title="Download the install script">
         <p>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { FolderOpen, FileDown, Terminal, RefreshCw } from "lucide-react"
-import { DocsHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
+import { DocsPageHeader, Step, Code, CodeBlock, InfoBox } from "../docs-components"
 
 export const metadata: Metadata = {
   title: "Hyprland Installation Guide",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function HyprlandDocsPage() {
   return (
     <>
-      <DocsHeader active="hyprland" />
+      <DocsPageHeader title="Hyprland Theme" description="How to apply your custom Hyprland config and Waybar CSS." />
 
       <Step number={1} icon={FileDown} title="Export your config and Waybar CSS">
         <p>
