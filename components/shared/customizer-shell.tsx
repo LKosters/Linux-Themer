@@ -1,18 +1,53 @@
 "use client"
 
-import { Monitor } from "lucide-react"
+import { Fragment } from "react"
 import Link from "next/link"
+import { SiteHeader } from "./site-header"
 
-type DE = "gnome" | "cinnamon" | "hyprland" | "rofi" | "hyprconf" | "hyprinstall"
+type DE = "gnome" | "cinnamon" | "kde" | "hyprland" | "rofi" | "hyprconf" | "hyprinstall"
 
-const DE_OPTIONS: { value: DE; label: string; description: string }[] = [
-  { value: "gnome", label: "GNOME", description: "Modern, minimal" },
-  { value: "cinnamon", label: "Cinnamon", description: "Traditional desktop" },
-  { value: "hyprland", label: "Hyprland", description: "Tiling compositor" },
-  { value: "rofi", label: "Rofi", description: "App launcher" },
-  { value: "hyprconf", label: "Hypr Config", description: "Full config" },
-  { value: "hyprinstall", label: "Hyprland Installer", description: "Full setup" },
+interface NavItem {
+  value: DE
+  label: string
+}
+
+interface NavCategory {
+  id: string
+  label: string
+  items: NavItem[]
+}
+
+const NAV_CATEGORIES: NavCategory[] = [
+  {
+    id: "de",
+    label: "Desktop",
+    items: [
+      { value: "gnome", label: "GNOME" },
+      { value: "cinnamon", label: "Cinnamon" },
+      { value: "kde", label: "KDE Plasma" },
+    ],
+  },
+  {
+    id: "hyprland",
+    label: "Hyprland",
+    items: [
+      { value: "hyprland", label: "Theme" },
+      { value: "hyprconf", label: "Config" },
+      { value: "hyprinstall", label: "Installer" },
+    ],
+  },
+  {
+    id: "launcher",
+    label: "Launcher",
+    items: [
+      { value: "rofi", label: "Rofi" },
+    ],
+  },
 ]
+
+function getActiveCategory(activeDe: DE): NavCategory {
+  return NAV_CATEGORIES.find((cat) => cat.items.some((item) => item.value === activeDe)) ?? NAV_CATEGORIES[0]
+}
 
 export function CustomizerShell({
   activeDe,
@@ -23,51 +58,84 @@ export function CustomizerShell({
   preview: React.ReactNode
   controls: React.ReactNode
 }) {
+  const activeCategory = getActiveCategory(activeDe)
+
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
-      <header className="flex items-center justify-between border-b border-border px-6 py-3">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex items-center justify-center rounded-lg bg-accent/10 p-1.5">
-            <Monitor size={18} className="text-accent" />
-          </div>
-          <div>
-            <h1 className="font-serif text-xl leading-tight text-foreground">
-              Linux Themer
-            </h1>
-            <p className="text-[10px] font-sans uppercase tracking-[0.19em] text-muted-foreground">
-              Desktop Customization Studio
-            </p>
-          </div>
-        </Link>
-        <div className="flex items-center gap-4">
-          <div className="hidden items-center gap-6 md:flex">
-            <NavLink label="Customize" href={`/${activeDe}`} active />
-            <NavLink label="Docs" href="/docs" />
-          </div>
-        </div>
-      </header>
+      <SiteHeader activeSection="tools" />
 
-      <div className="flex items-center gap-1 border-b border-border px-6 py-2">
-        {DE_OPTIONS.map((opt) => (
-          <Link
-            key={opt.value}
-            href={`/${opt.value}`}
-            className="rounded-md px-3 py-1.5 text-xs font-sans transition-all"
-            style={{
-              backgroundColor:
-                activeDe === opt.value ? "hsl(var(--accent) / 0.15)" : "transparent",
-              color:
-                activeDe === opt.value ? "hsl(var(--accent))" : "hsl(var(--muted-foreground))",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor:
-                activeDe === opt.value ? "hsl(var(--accent) / 0.3)" : "transparent",
-            }}
-          >
-            <span className="font-medium">{opt.label}</span>
-            <span className="hidden sm:inline ml-1.5 opacity-60">{opt.description}</span>
-          </Link>
+      {/* Desktop nav — grouped tabs with dividers */}
+      <div className="hidden lg:flex items-center border-b border-border px-6">
+        {NAV_CATEGORIES.map((category, catIndex) => (
+          <Fragment key={category.id}>
+            {catIndex > 0 && (
+              <div className="mx-3 h-4 w-px bg-border" />
+            )}
+            <div className="flex items-center">
+              <span className="mr-2 text-[9px] font-sans uppercase tracking-[0.15em] text-muted-foreground/50">
+                {category.label}
+              </span>
+              {category.items.map((item) => (
+                <Link
+                  key={item.value}
+                  href={`/${item.value}`}
+                  className={`relative px-3 py-2.5 text-xs font-sans transition-colors ${
+                    activeDe === item.value
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {item.label}
+                  {activeDe === item.value && (
+                    <span className="absolute bottom-0 left-3 right-3 h-px bg-accent" />
+                  )}
+                </Link>
+              ))}
+            </div>
+          </Fragment>
         ))}
+      </div>
+
+      {/* Mobile nav — two-tier */}
+      <div className="flex flex-col border-b border-border lg:hidden">
+        <div className="flex items-center gap-1 px-4 py-1.5 border-b border-border/50">
+          {NAV_CATEGORIES.map((cat) => {
+            const isActive = cat.id === activeCategory.id
+            return (
+              <Link
+                key={cat.id}
+                href={`/${cat.items[0].value}`}
+                className={`rounded px-2 py-1 text-[10px] font-sans uppercase tracking-[0.1em] transition-colors ${
+                  isActive
+                    ? "bg-accent/15 text-accent"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {cat.label}
+              </Link>
+            )
+          })}
+        </div>
+        {activeCategory.items.length > 1 && (
+          <div className="flex items-center gap-0 px-4 py-1.5">
+            {activeCategory.items.map((item) => (
+              <Link
+                key={item.value}
+                href={`/${item.value}`}
+                className={`relative px-2.5 py-1 text-xs font-sans transition-colors ${
+                  activeDe === item.value
+                    ? "text-foreground"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {item.label}
+                {activeDe === item.value && (
+                  <span className="absolute bottom-0 left-2.5 right-2.5 h-px bg-accent" />
+                )}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-1 overflow-hidden">
@@ -115,21 +183,5 @@ export function CustomizerShell({
         </div>
       </div>
     </div>
-  )
-}
-
-function NavLink({ label, href, active = false }: { label: string; href: string; active?: boolean }) {
-  return (
-    <Link
-      href={href}
-      className={`text-xs font-sans uppercase tracking-[0.19em] transition-colors ${
-        active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-      }`}
-    >
-      {label}
-      {active && (
-        <span className="block mx-auto mt-0.5 h-px w-full bg-accent" />
-      )}
-    </Link>
   )
 }

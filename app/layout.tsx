@@ -16,10 +16,10 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Linux Themer - Desktop Customization Studio',
+    default: 'Linux Themer — Visual Config Builder for Linux Desktops',
     template: '%s | Linux Themer',
   },
-  description: 'Customize and preview Linux desktop themes for GNOME, Cinnamon, Hyprland, and Rofi. Live preview, preset themes, and one-click export.',
+  description: 'Build and preview themes for GNOME, Cinnamon, Hyprland, and Rofi. Generate hyprland.conf, Waybar CSS, GTK stylesheets, and Rofi .rasi files with a live desktop preview. Export ready-to-use config files or share your setup via URL.',
 }
 
 export const viewport: Viewport = {

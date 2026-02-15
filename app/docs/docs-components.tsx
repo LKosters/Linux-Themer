@@ -4,6 +4,7 @@ import Link from "next/link"
 const TABS = [
   { slug: "gnome", label: "GNOME" },
   { slug: "cinnamon", label: "Cinnamon" },
+  { slug: "kde", label: "KDE Plasma" },
   { slug: "hyprland", label: "Hyprland" },
   { slug: "rofi", label: "Rofi" },
 ]
