@@ -2,7 +2,7 @@
 
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
-import { ChevronDown, ChevronRight } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { useState } from "react"
 
 export function ColorInput({
@@ -94,17 +94,16 @@ export function Section({
     <div className="border-b border-border">
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center gap-2 px-4 py-3 text-left transition-colors hover:bg-muted/50"
+        className="flex w-full items-center gap-2.5 px-4 py-3 text-left transition-colors hover:bg-muted/50"
       >
-        <Icon size={14} className="text-accent" />
+        <Icon size={14} className={`transition-colors duration-200 ${open ? "text-accent" : "text-muted-foreground"}`} />
         <span className="text-sm font-sans font-medium text-foreground flex-1">
           {title}
         </span>
-        {open ? (
-          <ChevronDown size={14} className="text-muted-foreground" />
-        ) : (
-          <ChevronRight size={14} className="text-muted-foreground" />
-        )}
+        <ChevronDown
+          size={14}
+          className={`text-muted-foreground transition-transform duration-200 ${open ? "" : "-rotate-90"}`}
+        />
       </button>
       {open && <div className="flex flex-col gap-3 px-4 pb-4">{children}</div>}
     </div>

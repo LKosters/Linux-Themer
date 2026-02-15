@@ -1,7 +1,8 @@
 "use client"
 
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import Link from "next/link"
+import { Link2, Check } from "lucide-react"
 import { SiteHeader } from "./site-header"
 import { TOOL_CATEGORIES, FRAMELESS_SLUGS, getCategoryForSlug } from "@/lib/tools-config"
 
@@ -16,6 +17,13 @@ export function CustomizerShell({
 }) {
   const activeCategory = getCategoryForSlug(activeDe) ?? TOOL_CATEGORIES[0]
   const isFrameless = FRAMELESS_SLUGS.has(activeDe)
+  const [copied, setCopied] = useState(false)
+
+  function handleShare() {
+    navigator.clipboard.writeText(window.location.href)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
@@ -112,22 +120,39 @@ export function CustomizerShell({
           )}
         </main>
 
-        <aside className="hidden w-80 flex-shrink-0 border-l border-border bg-card lg:block overflow-hidden">
+        <aside className="relative hidden w-80 flex-shrink-0 border-l border-border bg-card lg:block overflow-hidden">
           {controls}
+          <button
+            onClick={handleShare}
+            className="absolute top-3.5 right-3 z-10 flex items-center gap-1.5 rounded-full border border-border bg-card/80 backdrop-blur-sm px-2.5 py-1 text-[11px] font-sans text-muted-foreground shadow-sm transition-all hover:text-accent hover:border-accent/40"
+            title="Copy link to clipboard"
+          >
+            {copied ? <Check size={12} className="text-accent" /> : <Link2 size={12} />}
+            {copied ? "Copied!" : "Share"}
+          </button>
         </aside>
 
         <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 lg:hidden">
-          <details className="group">
-            <summary className="flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-lg shadow-black/30 list-none">
-              <span className="text-xs font-sans text-foreground">Customize</span>
-              <span className="text-[10px] text-muted-foreground group-open:rotate-180 transition-transform">
-                {"^"}
-              </span>
-            </summary>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-card shadow-xl shadow-black/40">
-              {controls}
-            </div>
-          </details>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 shadow-lg shadow-black/30 text-xs font-sans text-muted-foreground transition-all active:scale-95"
+            >
+              {copied ? <Check size={13} className="text-accent" /> : <Link2 size={13} />}
+              {copied ? "Copied" : "Share"}
+            </button>
+            <details className="group">
+              <summary className="flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-lg shadow-black/30 list-none">
+                <span className="text-xs font-sans text-foreground">Customize</span>
+                <span className="text-[10px] text-muted-foreground group-open:rotate-180 transition-transform">
+                  {"^"}
+                </span>
+              </summary>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 max-h-[60vh] overflow-y-auto rounded-xl border border-border bg-card shadow-xl shadow-black/40">
+                {controls}
+              </div>
+            </details>
+          </div>
         </div>
       </div>
     </div>
