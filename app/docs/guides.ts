@@ -30,17 +30,39 @@ export const GUIDES: Guide[] = [
   {
     slug: "gnome",
     title: "GNOME",
-    description: "How to apply your custom GTK CSS theme to GNOME.",
+    description: "How to apply your custom GTK CSS and GNOME Shell theme.",
     meta: {
       title: "GNOME Installation Guide",
-      description: "How to install your custom GNOME GTK CSS theme on Linux.",
+      description: "How to install your custom GNOME GTK CSS and Shell theme on Linux.",
     },
     steps: [
+      {
+        icon: "settings",
+        title: "Install required extensions",
+        content: [
+          { type: "text", text: "To apply panel, dock, and shell styling, you need these GNOME Shell extensions:" },
+          {
+            type: "list",
+            items: [
+              "**User Themes** — Allows loading custom GNOME Shell themes from `~/.themes/`. Install from [extensions.gnome.org](https://extensions.gnome.org/extension/19/user-themes/) or your package manager (`gnome-shell-extension-user-theme`).",
+              "**Dash to Dock** — Required for dock customization (position, icon size, always visible). Install from [extensions.gnome.org](https://extensions.gnome.org/extension/307/dash-to-dock/).",
+            ],
+          },
+          { type: "text", text: "If you only want to change app colors (GTK CSS), these extensions are not required. They are only needed for the **Export Install Script** option." },
+        ],
+      },
       {
         icon: "file-down",
         title: "Export your theme",
         content: [
-          { type: "text", text: "Click **Export GTK CSS** in the customizer sidebar to download your `gtk.css` file." },
+          { type: "text", text: "You have two export options:" },
+          {
+            type: "list",
+            items: [
+              "**Export Install Script** — A bash script that applies GTK CSS, GNOME Shell theme (panel/dock styling), and dock settings all at once. Requires the extensions above.",
+              "**Export GTK CSS Only** — Just the `gtk.css` file for app window colors. No extensions needed.",
+            ],
+          },
         ],
       },
       {
@@ -66,6 +88,7 @@ export const GUIDES: Guide[] = [
         icon: "refresh-cw",
         title: "Apply the changes",
         content: [
+          { type: "text", text: "If you used the **Install Script**, it handles everything automatically. Otherwise:" },
           {
             type: "list",
             items: [
@@ -73,6 +96,8 @@ export const GUIDES: Guide[] = [
               "**X11** — Press `Alt+F2`, type `r`, Enter",
             ],
           },
+          { type: "text", text: "If you installed a shell theme, enable it via GNOME Tweaks or:" },
+          { type: "code", code: 'gsettings set org.gnome.shell.extensions.user-theme name "LinuxThemer"' },
         ],
       },
     ],
@@ -80,7 +105,9 @@ export const GUIDES: Guide[] = [
       {
         content: [
           { type: "text", text: "**Reverting:** Delete the custom files to restore defaults:" },
-          { type: "code", code: "rm ~/.config/gtk-4.0/gtk.css ~/.config/gtk-3.0/gtk.css" },
+          { type: "code", code: "rm ~/.config/gtk-4.0/gtk.css ~/.config/gtk-3.0/gtk.css\nrm -rf ~/.themes/LinuxThemer" },
+          { type: "text", text: "Reset the shell theme:" },
+          { type: "code", code: "gsettings reset org.gnome.shell.extensions.user-theme name" },
         ],
       },
     ],
